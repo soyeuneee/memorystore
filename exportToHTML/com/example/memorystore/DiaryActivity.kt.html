@@ -1,0 +1,203 @@
+<html>
+<head>
+<title>DiaryActivity.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #7a7e85;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+DiaryActivity.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">memorystore</span>
+
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">Manifest</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">SuppressLint</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">Activity</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">Intent</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">graphics</span><span class="s2">.</span><span class="s1">Bitmap</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">graphics</span><span class="s2">.</span><span class="s1">Color</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">os</span><span class="s2">.</span><span class="s1">Bundle</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">provider</span><span class="s2">.</span><span class="s1">MediaStore</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">Button</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">EditText</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">ImageView</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">LinearLayout</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">TextView</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">Toast</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">appcompat</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">AppCompatActivity</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">constraintlayout</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">ConstraintLayout</span>
+
+<span class="s0">class </span><span class="s1">DiaryActivity : AppCompatActivity</span><span class="s2">() {</span>
+
+    <span class="s1">private lateinit </span><span class="s0">var </span><span class="s1">imageViewDiary: ImageView</span>
+    <span class="s1">private lateinit </span><span class="s0">var </span><span class="s1">editTextMemory: EditText</span>
+    <span class="s1">private lateinit </span><span class="s0">var </span><span class="s1">buttonCamera: Button</span>
+    <span class="s1">private lateinit </span><span class="s0">var </span><span class="s1">buttonGallery: Button</span>
+    <span class="s1">private lateinit </span><span class="s0">var </span><span class="s1">buttonSave: Button</span>
+
+    <span class="s1">@SuppressLint</span><span class="s2">(</span><span class="s3">&quot;MissingInflatedId&quot;</span><span class="s2">)</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">savedInstanceState: Bundle?</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">savedInstanceState</span><span class="s2">)</span>
+
+        <span class="s4">// XML 레이아웃 직접 정의</span>
+        <span class="s0">val </span><span class="s1">constraintLayout </span><span class="s2">= </span><span class="s1">ConstraintLayout</span><span class="s2">(</span><span class="s0">this</span><span class="s2">).</span><span class="s1">apply </span><span class="s2">{</span>
+            <span class="s1">layoutParams </span><span class="s2">= </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">(</span>
+                <span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">MATCH_PARENT</span><span class="s2">,</span>
+                <span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">MATCH_PARENT</span>
+            <span class="s2">)</span>
+            <span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">android</span><span class="s2">.</span><span class="s1">graphics</span><span class="s2">.</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">parseColor</span><span class="s2">(</span><span class="s3">&quot;#FFF4F7&quot;</span><span class="s2">))</span>
+        <span class="s2">}</span>
+
+        <span class="s0">val </span><span class="s1">titleTextView </span><span class="s2">= </span><span class="s1">TextView</span><span class="s2">(</span><span class="s0">this</span><span class="s2">).</span><span class="s1">apply </span><span class="s2">{</span>
+            <span class="s1">id </span><span class="s2">= </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">titleTextView</span>
+            <span class="s1">text </span><span class="s2">= </span><span class="s3">&quot;오늘의 다이어리&quot;</span>
+            <span class="s1">textSize </span><span class="s2">= </span><span class="s5">20f</span>
+            <span class="s1">setTextColor</span><span class="s2">(</span><span class="s1">android</span><span class="s2">.</span><span class="s1">graphics</span><span class="s2">.</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">BLACK</span><span class="s2">)</span>
+            <span class="s1">layoutParams </span><span class="s2">= </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">(</span>
+                <span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">WRAP_CONTENT</span><span class="s2">,</span>
+                <span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">WRAP_CONTENT</span>
+            <span class="s2">).</span><span class="s1">apply </span><span class="s2">{</span>
+                <span class="s1">setMargins</span><span class="s2">(</span><span class="s5">16</span><span class="s2">, </span><span class="s5">16</span><span class="s2">, </span><span class="s5">16</span><span class="s2">, </span><span class="s5">0</span><span class="s2">)</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s1">imageViewDiary </span><span class="s2">= </span><span class="s1">ImageView</span><span class="s2">(</span><span class="s0">this</span><span class="s2">).</span><span class="s1">apply </span><span class="s2">{</span>
+            <span class="s1">id </span><span class="s2">= </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">eimageViewDiary</span>
+            <span class="s1">layoutParams </span><span class="s2">= </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">(</span>
+                <span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">MATCH_PARENT</span><span class="s2">,</span>
+                <span class="s5">200</span>
+            <span class="s2">).</span><span class="s1">apply </span><span class="s2">{</span>
+                <span class="s1">setMargins</span><span class="s2">(</span><span class="s5">16</span><span class="s2">, </span><span class="s5">16</span><span class="s2">, </span><span class="s5">16</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+            <span class="s2">}</span>
+            <span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">parseColor</span><span class="s2">(</span><span class="s3">&quot;#FFF4F7&quot;</span><span class="s2">))</span>
+            <span class="s1">scaleType </span><span class="s2">= </span><span class="s1">ImageView</span><span class="s2">.</span><span class="s1">ScaleType</span><span class="s2">.</span><span class="s1">CENTER_CROP</span>
+        <span class="s2">}</span>
+
+        <span class="s1">constraintLayout</span><span class="s2">.</span><span class="s1">addView</span><span class="s2">(</span><span class="s1">imageViewDiary</span><span class="s2">)</span>
+
+
+        <span class="s0">val </span><span class="s1">buttonLayout </span><span class="s2">= </span><span class="s1">LinearLayout</span><span class="s2">(</span><span class="s0">this</span><span class="s2">).</span><span class="s1">apply </span><span class="s2">{</span>
+            <span class="s1">orientation </span><span class="s2">= </span><span class="s1">LinearLayout</span><span class="s2">.</span><span class="s1">HORIZONTAL</span>
+            <span class="s1">layoutParams </span><span class="s2">= </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">(</span>
+                <span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">WRAP_CONTENT</span><span class="s2">,</span>
+                <span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">WRAP_CONTENT</span>
+            <span class="s2">)</span>
+        <span class="s2">}</span>
+
+        <span class="s1">buttonCamera </span><span class="s2">= </span><span class="s1">Button</span><span class="s2">(</span><span class="s0">this</span><span class="s2">).</span><span class="s1">apply </span><span class="s2">{</span>
+            <span class="s1">id </span><span class="s2">= </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">buttonCamera</span>
+            <span class="s1">text </span><span class="s2">= </span><span class="s3">&quot;카메라&quot;</span>
+        <span class="s2">}</span>
+
+        <span class="s1">buttonGallery </span><span class="s2">= </span><span class="s1">Button</span><span class="s2">(</span><span class="s0">this</span><span class="s2">).</span><span class="s1">apply </span><span class="s2">{</span>
+            <span class="s1">id </span><span class="s2">= </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">buttonGallery</span>
+            <span class="s1">text </span><span class="s2">= </span><span class="s3">&quot;갤러리&quot;</span>
+        <span class="s2">}</span>
+
+        <span class="s1">buttonLayout</span><span class="s2">.</span><span class="s1">addView</span><span class="s2">(</span><span class="s1">buttonCamera</span><span class="s2">)</span>
+        <span class="s1">buttonLayout</span><span class="s2">.</span><span class="s1">addView</span><span class="s2">(</span><span class="s1">buttonGallery</span><span class="s2">)</span>
+
+        <span class="s1">editTextMemory </span><span class="s2">= </span><span class="s1">EditText</span><span class="s2">(</span><span class="s0">this</span><span class="s2">).</span><span class="s1">apply </span><span class="s2">{</span>
+            <span class="s1">id </span><span class="s2">= </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">editTextMemory</span>
+            <span class="s1">hint </span><span class="s2">= </span><span class="s3">&quot;연인과의 소중한 추억을 남겨 주세요!&quot;</span>
+            <span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">android</span><span class="s2">.</span><span class="s1">graphics</span><span class="s2">.</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">parseColor</span><span class="s2">(</span><span class="s3">&quot;#F8F8F8&quot;</span><span class="s2">))</span>
+            <span class="s1">layoutParams </span><span class="s2">= </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">(</span>
+                <span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">MATCH_PARENT</span><span class="s2">,</span>
+                <span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">WRAP_CONTENT</span>
+            <span class="s2">)</span>
+        <span class="s2">}</span>
+
+        <span class="s1">buttonSave </span><span class="s2">= </span><span class="s1">Button</span><span class="s2">(</span><span class="s0">this</span><span class="s2">).</span><span class="s1">apply </span><span class="s2">{</span>
+            <span class="s1">id </span><span class="s2">= </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">buttonSave</span>
+            <span class="s1">text </span><span class="s2">= </span><span class="s3">&quot;저장&quot;</span>
+            <span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">android</span><span class="s2">.</span><span class="s1">graphics</span><span class="s2">.</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">parseColor</span><span class="s2">(</span><span class="s3">&quot;#F06292&quot;</span><span class="s2">))</span>
+            <span class="s1">setTextColor</span><span class="s2">(</span><span class="s1">android</span><span class="s2">.</span><span class="s1">graphics</span><span class="s2">.</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">)</span>
+        <span class="s2">}</span>
+
+        <span class="s1">constraintLayout</span><span class="s2">.</span><span class="s1">addView</span><span class="s2">(</span><span class="s1">titleTextView</span><span class="s2">)</span>
+        <span class="s1">constraintLayout</span><span class="s2">.</span><span class="s1">addView</span><span class="s2">(</span><span class="s1">imageViewDiary</span><span class="s2">)</span>
+        <span class="s1">constraintLayout</span><span class="s2">.</span><span class="s1">addView</span><span class="s2">(</span><span class="s1">buttonLayout</span><span class="s2">)</span>
+        <span class="s1">constraintLayout</span><span class="s2">.</span><span class="s1">addView</span><span class="s2">(</span><span class="s1">editTextMemory</span><span class="s2">)</span>
+        <span class="s1">constraintLayout</span><span class="s2">.</span><span class="s1">addView</span><span class="s2">(</span><span class="s1">buttonSave</span><span class="s2">)</span>
+
+        <span class="s1">setContentView</span><span class="s2">(</span><span class="s1">constraintLayout</span><span class="s2">)</span>
+
+        <span class="s4">// Constraint 연결</span>
+        <span class="s0">val </span><span class="s1">set </span><span class="s2">= </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">constraintlayout</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">ConstraintSet</span><span class="s2">()</span>
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">clone</span><span class="s2">(</span><span class="s1">constraintLayout</span><span class="s2">)</span>
+
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">titleTextView</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">TOP</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">PARENT_ID</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">TOP</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">titleTextView</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">START</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">PARENT_ID</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">START</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">imageViewDiary</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">TOP</span><span class="s2">, </span><span class="s1">titleTextView</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">BOTTOM</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">imageViewDiary</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">START</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">PARENT_ID</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">START</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">imageViewDiary</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">END</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">PARENT_ID</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">END</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">buttonLayout</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">TOP</span><span class="s2">, </span><span class="s1">imageViewDiary</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">BOTTOM</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">buttonLayout</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">START</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">PARENT_ID</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">START</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">editTextMemory</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">TOP</span><span class="s2">, </span><span class="s1">buttonLayout</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">BOTTOM</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">editTextMemory</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">START</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">PARENT_ID</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">START</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">editTextMemory</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">END</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">PARENT_ID</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">END</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">buttonSave</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">TOP</span><span class="s2">, </span><span class="s1">editTextMemory</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">BOTTOM</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">buttonSave</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">START</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">PARENT_ID</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">START</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">connect</span><span class="s2">(</span><span class="s1">buttonSave</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">END</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">PARENT_ID</span><span class="s2">, </span><span class="s1">ConstraintLayout</span><span class="s2">.</span><span class="s1">LayoutParams</span><span class="s2">.</span><span class="s1">END</span><span class="s2">, </span><span class="s5">16</span><span class="s2">)</span>
+
+        <span class="s1">set</span><span class="s2">.</span><span class="s1">applyTo</span><span class="s2">(</span><span class="s1">constraintLayout</span><span class="s2">)</span>
+
+        <span class="s4">// 버튼 이벤트 처리</span>
+        <span class="s1">buttonCamera</span><span class="s2">.</span><span class="s1">setOnClickListener </span><span class="s2">{</span>
+            <span class="s0">val </span><span class="s1">cameraIntent </span><span class="s2">= </span><span class="s1">Intent</span><span class="s2">(</span><span class="s1">MediaStore</span><span class="s2">.</span><span class="s1">ACTION_IMAGE_CAPTURE</span><span class="s2">)</span>
+            <span class="s1">startActivityForResult</span><span class="s2">(</span><span class="s1">cameraIntent</span><span class="s2">, </span><span class="s1">REQUEST_CAMERA</span><span class="s2">)</span>
+        <span class="s2">}</span>
+
+        <span class="s1">buttonGallery</span><span class="s2">.</span><span class="s1">setOnClickListener </span><span class="s2">{</span>
+            <span class="s0">val </span><span class="s1">galleryIntent </span><span class="s2">= </span><span class="s1">Intent</span><span class="s2">(</span><span class="s1">Intent</span><span class="s2">.</span><span class="s1">ACTION_PICK</span><span class="s2">, </span><span class="s1">MediaStore</span><span class="s2">.</span><span class="s1">Images</span><span class="s2">.</span><span class="s1">Media</span><span class="s2">.</span><span class="s1">EXTERNAL_CONTENT_URI</span><span class="s2">)</span>
+            <span class="s1">startActivityForResult</span><span class="s2">(</span><span class="s1">galleryIntent</span><span class="s2">, </span><span class="s1">REQUEST_GALLERY</span><span class="s2">)</span>
+        <span class="s2">}</span>
+
+        <span class="s1">buttonSave</span><span class="s2">.</span><span class="s1">setOnClickListener </span><span class="s2">{</span>
+            <span class="s0">val </span><span class="s1">memoryText </span><span class="s2">= </span><span class="s1">editTextMemory</span><span class="s2">.</span><span class="s1">text</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">()</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">memoryText</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+                <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;내용을 입력해 주세요!&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">()</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;저장되었습니다!&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">()</span>
+                <span class="s4">// 저장 로직 추가</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onActivityResult</span><span class="s2">(</span><span class="s1">requestCode: Int</span><span class="s2">, </span><span class="s1">resultCode: Int</span><span class="s2">, </span><span class="s1">data: Intent?</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onActivityResult</span><span class="s2">(</span><span class="s1">requestCode</span><span class="s2">, </span><span class="s1">resultCode</span><span class="s2">, </span><span class="s1">data</span><span class="s2">)</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">resultCode </span><span class="s2">== </span><span class="s1">Activity</span><span class="s2">.</span><span class="s1">RESULT_OK</span><span class="s2">) {</span>
+            <span class="s0">when </span><span class="s2">(</span><span class="s1">requestCode</span><span class="s2">) {</span>
+                <span class="s1">REQUEST_CAMERA </span><span class="s2">-&gt; {</span>
+                    <span class="s0">val </span><span class="s1">imageBitmap </span><span class="s2">= </span><span class="s1">data?</span><span class="s2">.</span><span class="s1">extras?</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s3">&quot;data&quot;</span><span class="s2">) </span><span class="s0">as? </span><span class="s1">Bitmap</span>
+                    <span class="s1">imageViewDiary</span><span class="s2">.</span><span class="s1">setImageBitmap</span><span class="s2">(</span><span class="s1">imageBitmap</span><span class="s2">)</span>
+                <span class="s2">}</span>
+                <span class="s1">REQUEST_GALLERY </span><span class="s2">-&gt; {</span>
+                    <span class="s0">val </span><span class="s1">selectedImageUri </span><span class="s2">= </span><span class="s1">data?</span><span class="s2">.</span><span class="s1">data</span>
+                    <span class="s1">imageViewDiary</span><span class="s2">.</span><span class="s1">setImageURI</span><span class="s2">(</span><span class="s1">selectedImageUri</span><span class="s2">)</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s1">companion </span><span class="s0">object </span><span class="s2">{</span>
+        <span class="s1">private const </span><span class="s0">val </span><span class="s1">REQUEST_CAMERA </span><span class="s2">= </span><span class="s5">100</span>
+        <span class="s1">private const </span><span class="s0">val </span><span class="s1">REQUEST_GALLERY </span><span class="s2">= </span><span class="s5">101</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
